@@ -1,0 +1,1 @@
+This is the text file that is created by using the go lang programming language Hope we all love it.
