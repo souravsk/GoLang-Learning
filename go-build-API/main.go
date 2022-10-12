@@ -3,7 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -28,7 +31,8 @@ var courses []Course
 
 //helper - file(it mean it shoud in different file)
 func (c *Course) IsEmpty() bool {
-	return c.CourseId == "" && c.CourseName == ""
+	// return c.CourseId == "" && c.CourseName == ""
+	return c.CourseName == ""
 }
 
 func main() {
@@ -65,4 +69,34 @@ func getOneCourse(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode("NO Couse Found with Given id")
 	return
+}
+
+// create one course
+
+func createOneCourse(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Create one Course")
+	w.Header().Set("content-Type", "application/json")
+
+	//what if body is empty
+	if r.Body == nil {
+		json.NewEncoder(w).Encode("Plese send some data")
+	}
+
+	//what about this {} this is data some kind of data but not a really data
+	var course Course
+	_ = json.NewDecoder(r.Body).Decode(&course)
+	if course.IsEmpty() {
+		json.NewEncoder(w).Encode("NO data found inside JSON")
+		return
+	}
+
+	//generate unique id, string
+	//append course into courses
+
+	rand.Seed(time.Now().UnixNano())
+	course.CourseId = strconv.Itoa(rand.Intn(100))
+	courses = append(courses, course)
+	json.NewEncoder(w).Encode("New Data is added into database")
+	json.NewEncoder(w).Encode(course)
+
 }
