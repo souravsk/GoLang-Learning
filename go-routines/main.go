@@ -8,7 +8,11 @@ import (
 	"sync"
 )
 
+var signals = []string{"test"}
+
 var wg sync.WaitGroup //usely this are in pointers, sync is go package and within sync we have waitgroup
+
+var mut sync.Mutex // it should be in pointer but now it just like that,it lock the menory until the process is compelet and after compeleting is unlock the menory
 
 func main() {
 	// go greeter("hello") //what we are doing here is create the thead
@@ -24,7 +28,7 @@ func main() {
 
 	for _, web := range websitelist {
 		go getStatusCode(web)
-		wg.Add(1)
+		wg.Add(1) //it job is to add the goroutines that need to call and in our case it just so we use one
 	}
 
 	wg.Wait() //This wait always is on the last of the main function, the work of the wait() is to make the main() to wait until it get the Done() signl
@@ -43,6 +47,11 @@ func getStatusCode(endpoint string) {
 	res, err := http.Get(endpoint)
 	if err != nil {
 		fmt.Println("Oops in endpoint ")
+	} else {
+		mut.Lock()
+		signals = append(signals, endpoint)
+		mut.Unlock()
+
+		fmt.Printf("%d status code for %s\n", res.StatusCode, endpoint)
 	}
-	fmt.Printf("%d status code for %s\n", res.StatusCode, endpoint)
 }
