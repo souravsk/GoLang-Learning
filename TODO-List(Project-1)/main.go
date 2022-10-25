@@ -28,5 +28,7 @@ type (
 )
 
 func init(){
-	ren rend
+	ren = renderer.New()
+	sess, err = mgo.Dial(hostName)
+	checkErr
 }
