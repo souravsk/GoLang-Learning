@@ -1,4 +1,10 @@
 /* https://leetcode.com/problems/find-smallest-letter-greater-than-target/ */
+/* 
+	So in this quation what we have do is the we use the binary search algo to slove the problem 
+	everything is just same as the binary search algo we are just returning the letters[start % len(letters)]
+	this will 
+
+*/
 package godsa
 
 func nextGreatestLetter(letters []byte, target byte) byte {
