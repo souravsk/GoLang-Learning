@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 )
 
 func main(){
-	fmt.Println("Wellcome to Golang loops\n")
+	fmt.Println("Wellcome to Golang loops")
 	
-	days := []string{
+	/* days := []string{
 		"Sunday",
 		"Monday",
 		"Tuesday",
@@ -15,7 +16,7 @@ func main(){
 		"Friday",
 		"Saturday"}
 
-	fmt.Println(days)
+	fmt.Println(days) */
 
 		//simple for loops
 
@@ -30,7 +31,22 @@ func main(){
 	// }
 
 		//
-	for index, day := range days{
+	/* for index, day := range days{
 		fmt.Printf("Index is %v and value is %v\n",index, day)
+	} */
+
+	var randam = rand.Intn(101)
+
+	if randam == 50 {
+		fmt.Println("it 50")
 	}
+	
+	if randam > 50{
+		fmt.Println("It's closer to 100",randam)
+	} else if randam < 50{
+		fmt.Println("It's closer to 0",randam)
+	} else{
+		fmt.Println(randam)	
+	}
+
 }
